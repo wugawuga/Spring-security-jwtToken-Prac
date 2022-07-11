@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>회원가입</h1>
+<form role="form" th:object="${memberDTO}" action="/members/new" method="post">
+    id : <input type="text" th:field="*{memberId}">
+    <p th:if="${#fields.hasErrors('memberId')}"
+       th:errors="*{memberId}">Incorrect date</p><br>
+    pw : <input type="password" th:field="*{password}">
+    <p th:if="${#fields.hasErrors('password')}"
+       th:errors="*{password}">Incorrect date</p>
+    <button type="submit">회원가입</button>
+</form>
+</body>
+</html>
