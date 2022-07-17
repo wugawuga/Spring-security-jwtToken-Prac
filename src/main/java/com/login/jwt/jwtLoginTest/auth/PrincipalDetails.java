@@ -4,17 +4,25 @@ import com.login.jwt.jwtLoginTest.domain.User;
 import com.login.jwt.jwtLoginTest.domain.UserJWT;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Data
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private UserJWT userJWT;
+    private Map<String, Object> attributes;
 
     public PrincipalDetails(UserJWT userJWT) {
         this.userJWT = userJWT;
+    }
+
+    public PrincipalDetails(UserJWT userJWT, Map<String, Object> attributes) {
+        this.userJWT = userJWT;
+        this.attributes = attributes;
     }
 
     // 해당 유저의 권한 반환!! - security login
@@ -67,5 +75,15 @@ public class PrincipalDetails implements UserDetails {
         // user.getLoginTime
         // 현재시간 - 로그인시간 => 1년 넘어가면 false 반환
        return true;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }
